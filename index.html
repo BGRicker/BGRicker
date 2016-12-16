@@ -1,38 +1,82 @@
 <!doctype html>
 <html>
-  <style>
-    html { 
-      background: url(bg1.png) center center fixed; 
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: 100%;
-     cursor:
-    url('data:image/x-icon;base64,AAACAAEAICAQAAAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAAAIAAAAAAAAAAAAAEAAAAAAAAAAAAAAA/4QAADcA/wAN/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIgMzAzMwIAAAAAAAAAAAAgADAwMAMCAAAAAAAAAAAAIAAwMDADAgAAAAAAAAAAACIgMzAzMwIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEREQERAQAQAAAAAAAAAAAQAAEBAAEAEAAAAAAAAAAAEAABAREBABAAAAAAAAAAABAAAQEAAQAQAAAAAAAAAAARERABEQEREAAAAAAAAAAAEAABAAABAAAAAAAAAAAAABAAAQAAAAAAAAAAAAAAAAAQAAEAAAAAAAAAAAAAAAAAEAABAAAAAAAAAAAAAAAAABEREQAAAAAAAAAAAAAAAAD/////////////////////////////////////////////////////////////////////////////////////EQv//3Vr//91a///EQv////7////////Ai3//3rt//96Lf//eu3//wYh//977///e////3v///97////A////w=='),
-    auto; }
-    #bg {
-      top: 5%;
-      left: 50%;
-      position: absolute;
-      background-color: white;
-      width: 30%;
-    }
-
-    p {
-      font-size: 2em;
-      font-family: "Comic Sans MS", cursive, sans-serif;
-      color: yellow;
-      background-color: black;
-    }
-  </style>
-  <style type="text/css">body { cursor:
-    url('data:image/x-icon;base64,AAACAAEAICAQAAAAAADoAgAAFgAAACgAAAAgAAAAQAAAAAEABAAAAAAAAAIAAAAAAAAAAAAAEAAAAAAAAAAAAAAA/4QAADcA/wAN/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIgMzAzMwIAAAAAAAAAAAAgADAwMAMCAAAAAAAAAAAAIAAwMDADAgAAAAAAAAAAACIgMzAzMwIAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEREQERAQAQAAAAAAAAAAAQAAEBAAEAEAAAAAAAAAAAEAABAREBABAAAAAAAAAAABAAAQEAAQAQAAAAAAAAAAARERABEQEREAAAAAAAAAAAEAABAAABAAAAAAAAAAAAABAAAQAAAAAAAAAAAAAAAAAQAAEAAAAAAAAAAAAAAAAAEAABAAAAAAAAAAAAAAAAABEREQAAAAAAAAAAAAAAAAD/////////////////////////////////////////////////////////////////////////////////////EQv//3Vr//91a///EQv////7////////Ai3//3rt//96Lf//eu3//wYh//977///e////3v///97////A////w=='),
-    auto; }</style>
+    <link rel="stylesheet" href="style.css">
 
   <body>
     <div id="bg">
       <p> This is my terrific website</p>
     </div>
+    <div class="keys">
+      <div data-key="65" class="key">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
+      </div>
+      <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">hihat</span>
+      </div>
+      <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">kick</span>
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">openhat</span>
+      </div>
+      <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">boom</span>
+      </div>
+      <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">ride</span>
+      </div>
+      <div data-key="74" class="key">
+        <kbd>J</kbd>
+        <span class="sound">snare</span>
+      </div>
+      <div data-key="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">tom</span>
+      </div>
+      <div data-key="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">tink</span>
+      </div>
+    </div>
+
+
+    <audio data-key="65" src="sounds/clap.wav"></audio>
+    <audio data-key="83" src="sounds/hihat.wav"></audio>
+    <audio data-key="68" src="sounds/kick.wav"></audio>
+    <audio data-key="70" src="sounds/openhat.wav"></audio>
+    <audio data-key="71" src="sounds/boom.wav"></audio>
+    <audio data-key="72" src="sounds/ride.wav"></audio>
+    <audio data-key="74" src="sounds/snare.wav"></audio>
+    <audio data-key="75" src="sounds/tom.wav"></audio>
+    <audio data-key="76" src="sounds/tink.wav"></audio>
+
+    <script>
+
+      function playSound(e) { 
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+        if(!audio) return;
+        audio.currentTime = 0;
+        audio.play();
+        key.classList.add('playing');
+      }
+
+      function removeTransition(e) {
+        if(e.propertyName !== 'transform') return;
+        this.classList.remove('playing');
+      }
+
+      const keys = document.querySelectorAll('.key');
+      keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+      window.addEventListener('keydown', playSound);
+
+    </script>
   </body>
 </html>
 
